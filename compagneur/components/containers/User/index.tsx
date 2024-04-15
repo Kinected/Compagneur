@@ -17,7 +17,7 @@ const Identity = (props: Props) => {
     ["user", props.id],
     async () => {
       const response = await fetch(
-        "http://localhost:8000/api/user?userID=" + props.id,
+        "http://localhost:8000/api/user/?userID=" + props.id,
       );
       return response.json();
     },
@@ -27,7 +27,7 @@ const Identity = (props: Props) => {
   const mutation = useMutation(
     async (body: { firstname: string; lastname: string }) => {
       const response = await fetch(
-        "http://localhost:8000/api/user?userID=" + props.id,
+        "http://localhost:8000/api/user/?userID=" + props.id,
         {
           method: "PUT",
           body: JSON.stringify(body),

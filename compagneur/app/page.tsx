@@ -11,7 +11,7 @@ export default function Home() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data: users } = useQuery<User[]>("users", async () => {
-    const response = await fetch("http://localhost:8000/api/users");
+    const response = await fetch("http://localhost:8000/api/user/all");
     return response.json();
   });
   console.log(users);
@@ -19,7 +19,7 @@ export default function Home() {
   const mutation = useMutation(
     async (id: string) => {
       const response = await fetch(
-        "http://localhost:8000/api/user?userID=" + id,
+        "http://localhost:8000/api/user/?userID=" + id,
         {
           method: "DELETE",
         },
