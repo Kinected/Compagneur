@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Mauria from "@/components/containers/Mauria";
 import Spotify from "@/components/containers/Spotify";
 import Identity from "@/components/containers/User";
 import Cookies from "js-cookie";
-import Ilevia from "@/components/containers/Ilevia";
+import Ilevia from "../../components/containers/Ilevia/bus";
+import IleviaVlille from "@/components/containers/Ilevia/vlille";
 
 const Page = () => {
   const id = Cookies.get("userID") as string;
@@ -15,6 +16,7 @@ const Page = () => {
       <Spotify id={id} />
       <Mauria id={id} />
       <Ilevia id={id} />
+      <IleviaVlille id={id} />
     </div>
   );
 };
