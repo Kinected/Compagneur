@@ -13,7 +13,7 @@ const CLIENT_ID = "e4073db5b2a64a4f9d807e9c6bb71c3b"; // Remplacez par votre cli
 const CLIENT_SECRET = "88204c90ac414b8da1408dd4eee69d1d";
 const SCOPES =
   "user-read-currently-playing user-modify-playback-state user-read-recently-played user-read-playback-state"; // Les scopes déterminent quelles actions votre application est autorisée à effectuer
-const REDIRECT_URI = "http://172.20.10.6:3001/user"; // L'URL de redirection doit être la même que celle que vous avez configurée dans le tableau de bord de votre application Spotify
+const REDIRECT_URI = "http://" + process.env.NEXT_PUBLIC_URL + ":3001/user"; // L'URL de redirection doit être la même que celle que vous avez configurée dans le tableau de bord de votre application Spotify
 const authUrl = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(
   REDIRECT_URI,
 )}&scope=${encodeURIComponent(SCOPES)}`;
@@ -28,10 +28,16 @@ const Spotify = (props: Props) => {
   const postMutation = useMutation(
     async (code: string) => {
       const response = await fetch(
-        "http://172.20.10.6:8000/api/spotify/?userID=" + props.id,
+        "http://" +
+          process.env.NEXT_PUBLIC_URL +
+          ":8000/api/spotify/?userID=" +
+          props.id,
         {
           method: "POST",
-          body: JSON.stringify({ code }),
+          body: JSON.stringify({
+            code: code,
+            redirect_uri: REDIRECT_URI,
+          }),
         },
       );
       return response.json();
@@ -49,7 +55,10 @@ const Spotify = (props: Props) => {
     ["user", props.id],
     async () => {
       const response = await fetch(
-        "http://172.20.10.6:8000/api/user/?userID=" + props.id,
+        "http://" +
+          process.env.NEXT_PUBLIC_URL +
+          ":8000/api/user/?userID=" +
+          props.id,
       );
       return response.json();
     },
@@ -64,7 +73,10 @@ const Spotify = (props: Props) => {
   const deleteMutation = useMutation(
     async () => {
       const response = await fetch(
-        "http://172.20.10.6:8000/api/spotify/?userID=" + props.id,
+        "http://" +
+          process.env.NEXT_PUBLIC_URL +
+          ":8000/api/spotify/?userID=" +
+          props.id,
         {
           method: "DELETE",
         },

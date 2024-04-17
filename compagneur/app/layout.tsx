@@ -2,8 +2,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { useUserStore } from "@/store/userStore";
-import Cookies from "js-cookie";
 
 const inter = Inter({ subsets: ["latin"] });
 

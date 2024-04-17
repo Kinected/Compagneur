@@ -3,15 +3,18 @@ import React from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { nanoid } from "nanoid";
 import { User } from "@/types/user";
-import { useUserStore } from "@/store/userStore";
 import { useRouter } from "next/navigation";
+import Button from "@/components/Button";
+import { useUserStore } from "@/store/userStore";
 import Cookies from "js-cookie";
 
 export default function Home() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data: users } = useQuery<User[]>("users", async () => {
-    const response = await fetch("http://172.20.10.6:8000/api/user/all");
+    const response = await fetch(
+      "http://" + process.env.NEXT_PUBLIC_URL + ":8000/api/user/all",
+    );
     return response.json();
   });
   console.log(users);
@@ -19,7 +22,10 @@ export default function Home() {
   const mutation = useMutation(
     async (id: string) => {
       const response = await fetch(
-        "http://172.20.10.6:8000/api/user/?userID=" + id,
+        "http://" +
+          process.env.NEXT_PUBLIC_URL +
+          ":8000/api/user/?userID=" +
+          id,
         {
           method: "DELETE",
         },
@@ -42,35 +48,46 @@ export default function Home() {
         {users.map((user) => (
           <div
             key={nanoid()}
-            onClick={() => {
-              useUserStore.setState({ userID: user.id });
-              Cookies.set("userID", user.id);
-              router.push(`/user`);
-            }}
             className={
               "w-full bg-white p-4 rounded-lg shadow-md flex gap-4 justify-between items-center border-gray-200 border"
             }
           >
-            <img
-              src={"http://172.20.10.6:8000/public/" + user.id + ".jpg"}
-              alt={"user"}
-              className={"object-cover size-12 rounded-full"}
-            />
-            <div className={"flex flex-col flex-1"}>
-              <span className={"text-black text-sm font-light"}>Prénom</span>
-              <span className={"text-black"}>{user.firstname}</span>
+            <div
+              onClick={() => {
+                useUserStore.setState({ userID: user.id });
+                Cookies.set("userID", user.id);
+                router.push(`/user`);
+              }}
+              className={"flex flex-1 gap-4 items-center"}
+            >
+              <img
+                src={
+                  "http://" +
+                  process.env.NEXT_PUBLIC_URL +
+                  ":8000/public/" +
+                  user.id +
+                  ".jpg"
+                }
+                alt={"user"}
+                className={"object-cover size-12 rounded-full"}
+              />
+              <div className={"flex flex-col flex-1"}>
+                <span className={"text-black text-sm font-light"}>Prénom</span>
+                <span className={"text-black"}>{user.firstname}</span>
+              </div>
+              {/*<div className={"flex flex-col flex-1"}>*/}
+              {/*  <span className={"text-black text-sm font-light"}>Nom</span>*/}
+              {/*  <span className={"text-black"}>{user.lastname as string}</span>*/}
+              {/*</div>*/}
             </div>
-            <div className={"flex flex-col flex-1"}>
-              <span className={"text-black text-sm font-light"}>Nom</span>
-              <span className={"text-black"}>{user.lastname}</span>
-            </div>
-            <button
+            <Button
               onClick={(e) => {
                 e.preventDefault();
                 mutation.mutate(user.id);
               }}
-              className={"size-8 rounded-2xl bg-gray-200"}
-            />
+            >
+              Supprimer
+            </Button>
           </div>
         ))}
       </div>

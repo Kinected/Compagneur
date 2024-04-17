@@ -17,7 +17,10 @@ const Identity = (props: Props) => {
     ["user", props.id],
     async () => {
       const response = await fetch(
-        "http://172.20.10.6:8000/api/user/?userID=" + props.id,
+        "http://" +
+          process.env.NEXT_PUBLIC_URL +
+          ":8000/api/user/?userID=" +
+          props.id,
       );
       return response.json();
     },
@@ -27,7 +30,10 @@ const Identity = (props: Props) => {
   const mutation = useMutation(
     async (body: { firstname: string; lastname: string }) => {
       const response = await fetch(
-        "http://172.20.10.6:8000/api/user/?userID=" + props.id,
+        "http://" +
+          process.env.NEXT_PUBLIC_URL +
+          ":8000/api/user/?userID=" +
+          props.id,
         {
           method: "PUT",
           body: JSON.stringify(body),
@@ -68,7 +74,13 @@ const Identity = (props: Props) => {
       <form onSubmit={onSubmitHandler} className={"flex flex-col gap-4"}>
         <div className={"flex flex-1 gap-8 items-center"}>
           <img
-            src={"http://172.20.10.6:8000/public/" + props.id + ".jpg"}
+            src={
+              "http://" +
+              process.env.NEXT_PUBLIC_URL +
+              ":8000/public/" +
+              props.id +
+              ".jpg"
+            }
             alt={"user"}
             className={"object-cover size-24 rounded-full"}
           />
