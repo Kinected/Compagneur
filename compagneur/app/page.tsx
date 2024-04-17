@@ -11,7 +11,7 @@ export default function Home() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { data: users } = useQuery<User[]>("users", async () => {
-    const response = await fetch("http://localhost:8000/api/user/all");
+    const response = await fetch("http://172.20.10.6:8000/api/user/all");
     return response.json();
   });
   console.log(users);
@@ -19,7 +19,7 @@ export default function Home() {
   const mutation = useMutation(
     async (id: string) => {
       const response = await fetch(
-        "http://localhost:8000/api/user/?userID=" + id,
+        "http://172.20.10.6:8000/api/user/?userID=" + id,
         {
           method: "DELETE",
         },
@@ -52,7 +52,7 @@ export default function Home() {
             }
           >
             <img
-              src={"http://localhost:8000/public/" + user.id + ".jpg"}
+              src={"http://172.20.10.6:8000/public/" + user.id + ".jpg"}
               alt={"user"}
               className={"object-cover size-12 rounded-full"}
             />

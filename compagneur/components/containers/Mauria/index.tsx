@@ -19,7 +19,7 @@ const Mauria = (props: Props) => {
     ["user", id],
     async () => {
       const response = await fetch(
-        "http://localhost:8000/api/user/?userID=" + id,
+        "http://172.20.10.6:8000/api/user/?userID=" + id,
       );
       return response.json();
     },
@@ -30,7 +30,7 @@ const Mauria = (props: Props) => {
     ["user", id, "mauria"],
     async () => {
       const response = await fetch(
-        "http://localhost:8000/api/mauria/credentials?userID=" + id,
+        "http://172.20.10.6:8000/api/mauria/credentials?userID=" + id,
       );
       return response.json();
     },
@@ -40,7 +40,7 @@ const Mauria = (props: Props) => {
   const deleteMutation = useMutation(
     async () => {
       const response = await fetch(
-        "http://localhost:8000/api/mauria/?userID=" + id,
+        "http://172.20.10.6:8000/api/mauria/?userID=" + id,
         {
           method: "DELETE",
         },
@@ -60,7 +60,7 @@ const Mauria = (props: Props) => {
   const postMutation = useMutation(
     async (data: { password: string; email: string }) => {
       const response = await fetch(
-        "http://localhost:8000/api/mauria/?userID=" + id,
+        "http://172.20.10.6:8000/api/mauria/?userID=" + id,
         {
           method: "POST",
           body: JSON.stringify(data),

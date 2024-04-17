@@ -20,7 +20,7 @@ const IleviaVlille = (props: Props) => {
     ["vlille", props.id],
     async () => {
       const response = await fetch(
-        `http://localhost:8000/api/ilevia/borne?userID=${props.id}`,
+        `http://172.20.10.6:8000/api/ilevia/borne?userID=${props.id}`,
       );
       return await response.json();
     },
@@ -32,7 +32,7 @@ const IleviaVlille = (props: Props) => {
   const deleteMutation = useMutation(
     async (data: { station: string }) => {
       const response = await fetch(
-        `http://localhost:8000/api/ilevia/vlille?userID=${props.id}`,
+        `http://172.20.10.6:8000/api/ilevia/vlille?userID=${props.id}`,
         {
           method: "DELETE",
           body: JSON.stringify(data),
@@ -51,7 +51,7 @@ const IleviaVlille = (props: Props) => {
     async (data: { station: string }) => {
       console.log(data);
       const response = await fetch(
-        `http://localhost:8000/api/ilevia/vlille?userID=${props.id}`,
+        `http://172.20.10.6:8000/api/ilevia/vlille?userID=${props.id}`,
         {
           method: "POST",
           body: JSON.stringify(data),
